@@ -23,11 +23,11 @@ import com.sipcentric.simwood.api.exception.NumberingException;
 import com.sipcentric.simwood.api.model.AllocationResponse;
 import com.sipcentric.simwood.api.model.NumbersResponse;
 import com.sipcentric.simwood.api.model.SuccessResponse;
+import com.sipcentric.simwood.api.record.EmergencyServicesData;
 import com.sipcentric.simwood.api.record.Number;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -120,6 +120,11 @@ public class WebServiceClient {
         this.responseFor(HttpMethod.DELETE, base + "/numbers/" + account + "/allocated/" + number, null, null, SuccessResponse.class);
     }
 
+    public void updateEmergencyServicesData(String number, EmergencyServicesData data) throws IOException, NumberingException {
+        TypeReference<List<EmergencyServicesData>> tr = new TypeReference<List<EmergencyServicesData>>() {};
+        this.responseFor(HttpMethod.PUT, base + "/numbers/" + account + "/allocated/" + number + "/999", null, data, tr);
+    }
+    
     private <T> T responseFor(HttpMethod method, String resource, HashMap<String, String> params, Object requestObject, Class<T> cls) throws NumberingException, IOException {
         GenericUrl uri = this.createUri(resource, params);
         ObjectMapper mapper = new ObjectMapper();
