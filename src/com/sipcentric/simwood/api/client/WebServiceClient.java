@@ -25,6 +25,7 @@ import com.sipcentric.simwood.api.model.NumbersResponse;
 import com.sipcentric.simwood.api.model.SuccessResponse;
 import com.sipcentric.simwood.api.record.EmergencyServicesData;
 import com.sipcentric.simwood.api.record.Number;
+import com.sipcentric.simwood.api.record.SmsMessage;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -123,6 +124,10 @@ public class WebServiceClient {
     public void updateEmergencyServicesData(String number, EmergencyServicesData data) throws IOException, NumberingException {
         TypeReference<List<EmergencyServicesData>> tr = new TypeReference<List<EmergencyServicesData>>() {};
         this.responseFor(HttpMethod.PUT, base + "/numbers/" + account + "/allocated/" + number + "/999", null, data, tr);
+    }
+    
+    public void sendSms(SmsMessage sms) throws IOException, NumberingException {
+        this.responseFor(HttpMethod.POST, base + "/messaging/" + account + "/sms", null, sms, SuccessResponse.class);
     }
     
     private <T> T responseFor(HttpMethod method, String resource, HashMap<String, String> params, Object requestObject, Class<T> cls) throws NumberingException, IOException {
