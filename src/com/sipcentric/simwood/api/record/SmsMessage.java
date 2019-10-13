@@ -59,7 +59,7 @@ public class SmsMessage {
         this.report = report;
     }
     
-    private SmsMessage() {
+    public SmsMessage() {
     }
     
 }

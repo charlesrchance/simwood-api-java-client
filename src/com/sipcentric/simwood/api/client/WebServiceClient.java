@@ -22,6 +22,7 @@ import com.sipcentric.simwood.api.exception.HttpException;
 import com.sipcentric.simwood.api.exception.NumberingException;
 import com.sipcentric.simwood.api.model.AllocationResponse;
 import com.sipcentric.simwood.api.model.NumbersResponse;
+import com.sipcentric.simwood.api.model.SmsResponse;
 import com.sipcentric.simwood.api.model.SuccessResponse;
 import com.sipcentric.simwood.api.record.EmergencyServicesData;
 import com.sipcentric.simwood.api.record.Number;
@@ -127,7 +128,8 @@ public class WebServiceClient {
     }
     
     public void sendSms(SmsMessage sms) throws IOException, NumberingException {
-        this.responseFor(HttpMethod.POST, base + "/messaging/" + account + "/sms", null, sms, SuccessResponse.class);
+        TypeReference<List<SmsResponse>> tr = new TypeReference<List<SmsResponse>>() {};
+        this.responseFor(HttpMethod.POST, base + "/messaging/" + account + "/sms", null, sms, tr);
     }
     
     private <T> T responseFor(HttpMethod method, String resource, HashMap<String, String> params, Object requestObject, Class<T> cls) throws NumberingException, IOException {
